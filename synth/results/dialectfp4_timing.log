@@ -1,0 +1,847 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 17.0.0.17000604)
+
+-- Running command `
+  read_verilog rtl/dialectfp4_mac.v
+  
+  synth -flatten -top dialectfp4_mac
+  dfflibmap -liberty NangateOpenCellLibrary_typical.lib
+  abc -liberty NangateOpenCellLibrary_typical.lib -D 2000 -script synth/abc_timing.script
+' --
+
+1. Executing Verilog-2005 frontend: rtl/dialectfp4_mac.v
+Parsing Verilog input from `rtl/dialectfp4_mac.v' to AST representation.
+Generating RTLIL representation for module `\dfp4_mul'.
+Generating RTLIL representation for module `\dfp4_acc'.
+Generating RTLIL representation for module `\dialectfp4_mac'.
+Successfully finished Verilog frontend.
+
+2. Executing SYNTH pass.
+
+2.1. Executing HIERARCHY pass (managing design hierarchy).
+
+2.1.1. Analyzing design hierarchy..
+Top module:  \dialectfp4_mac
+Used module:     \dfp4_acc
+Used module:     \dfp4_mul
+Parameter \AW = 15
+
+2.1.2. Executing AST frontend in derive mode using pre-parsed AST for module `\dfp4_acc'.
+Parameter \AW = 15
+Generating RTLIL representation for module `$paramod\dfp4_acc\AW=s32'00000000000000000000000000001111'.
+
+2.1.3. Analyzing design hierarchy..
+Top module:  \dialectfp4_mac
+Used module:     $paramod\dfp4_acc\AW=s32'00000000000000000000000000001111
+Used module:     \dfp4_mul
+
+2.1.4. Analyzing design hierarchy..
+Top module:  \dialectfp4_mac
+Used module:     $paramod\dfp4_acc\AW=s32'00000000000000000000000000001111
+Used module:     \dfp4_mul
+Removing unused module `\dfp4_acc'.
+Removed 1 unused modules.
+
+2.2. Executing PROC pass (convert processes to netlists).
+
+2.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$rtl/dialectfp4_mac.v:58$8 in module $paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.
+Removed a total of 0 dead cases.
+
+2.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 5 assignments to connections.
+
+2.2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~2 debug messages>
+
+2.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+Creating decoders for process `$paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.$proc$rtl/dialectfp4_mac.v:58$8'.
+     1/1: $0\acc[14:0]
+
+2.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\dialectfp4_mac.\sa_r' using process `\dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+  created $dff cell `$procdff$17' with positive edge clock.
+Creating register for signal `\dialectfp4_mac.\sb_r' using process `\dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+  created $dff cell `$procdff$18' with positive edge clock.
+Creating register for signal `\dialectfp4_mac.\valid_r' using process `\dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+  created $dff cell `$procdff$19' with positive edge clock.
+Creating register for signal `\dialectfp4_mac.\na_r' using process `\dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+  created $dff cell `$procdff$20' with positive edge clock.
+Creating register for signal `\dialectfp4_mac.\nb_r' using process `\dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+  created $dff cell `$procdff$21' with positive edge clock.
+Creating register for signal `$paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.\acc' using process `$paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.$proc$rtl/dialectfp4_mac.v:58$8'.
+  created $dff cell `$procdff$22' with positive edge clock.
+
+2.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `dialectfp4_mac.$proc$rtl/dialectfp4_mac.v:83$7'.
+Found and cleaned up 2 empty switches in `$paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.$proc$rtl/dialectfp4_mac.v:58$8'.
+Removing empty process `$paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.$proc$rtl/dialectfp4_mac.v:58$8'.
+Cleaned up 2 empty switches.
+
+2.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+Optimizing module $paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.
+Optimizing module dfp4_mul.
+
+2.3. Executing CHECK pass (checking for obvious problems).
+Checking module dialectfp4_mac...
+Checking module $paramod\dfp4_acc\AW=s32'00000000000000000000000000001111...
+Checking module dfp4_mul...
+Found and reported 0 problems.
+
+2.4. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod\dfp4_acc\AW=s32'00000000000000000000000000001111.
+Deleting now unused module dfp4_mul.
+<suppressed ~2 debug messages>
+
+2.5. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.6. Executing CHECK pass (checking for obvious problems).
+Checking module dialectfp4_mac...
+Found and reported 0 problems.
+
+2.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+Removed 0 unused cells and 10 unused wires.
+<suppressed ~1 debug messages>
+
+2.8. Executing OPT pass (performing simple optimizations).
+
+2.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 15 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+2.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 15 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.8.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.9. Executing FSM pass (extract and optimize FSM).
+
+2.9.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+2.9.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+2.9.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+2.9.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.9.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+2.9.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+2.9.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+2.9.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+2.10. Executing OPT pass (performing simple optimizations).
+
+2.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 15 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.10.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+2.10.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.10.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 15 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.10.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $flatten\u_acc.$procdff$22 ($dff) from module dialectfp4_mac (D = $flatten\u_acc.$procmux$12_Y, Q = \u_acc.acc, rval = 15'000000000000000).
+Adding EN signal on $auto$ff.cc:337:slice$25 ($sdff) from module dialectfp4_mac (D = $flatten\u_acc.$ternary$rtl/dialectfp4_mac.v:62$11_Y, Q = \u_acc.acc).
+
+2.10.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+Removed 2 unused cells and 2 unused wires.
+<suppressed ~3 debug messages>
+
+2.10.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.10.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+2.10.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~2 debug messages>
+
+2.10.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.10.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.10.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.10.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.10.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.10.16. Finished fast OPT passes. (There is nothing left to do.)
+
+2.11. Executing WREDUCE pass (reducing word size of cells).
+Removed top 6 bits (of 15) from port B of cell dialectfp4_mac.$flatten\u_acc.$add$rtl/dialectfp4_mac.v:62$10 ($add).
+Removed top 6 bits (of 15) from port B of cell dialectfp4_mac.$flatten\u_acc.$sub$rtl/dialectfp4_mac.v:62$9 ($sub).
+
+2.12. Executing PEEPOPT pass (run peephole optimizers).
+
+2.13. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.14. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module dialectfp4_mac:
+  creating $macc model for $flatten\u_acc.$add$rtl/dialectfp4_mac.v:62$10 ($add).
+  creating $macc model for $flatten\u_acc.$sub$rtl/dialectfp4_mac.v:62$9 ($sub).
+  creating $macc model for $flatten\u_mul.$mul$rtl/dialectfp4_mac.v:41$1 ($mul).
+  creating $alu model for $macc $flatten\u_acc.$sub$rtl/dialectfp4_mac.v:62$9.
+  creating $alu model for $macc $flatten\u_acc.$add$rtl/dialectfp4_mac.v:62$10.
+  creating $macc cell for $flatten\u_mul.$mul$rtl/dialectfp4_mac.v:41$1: $auto$alumacc.cc:427:replace_macc$27
+  creating $alu cell for $flatten\u_acc.$add$rtl/dialectfp4_mac.v:62$10: $auto$alumacc.cc:578:replace_alu$28
+  creating $alu cell for $flatten\u_acc.$sub$rtl/dialectfp4_mac.v:62$9: $auto$alumacc.cc:578:replace_alu$31
+  created 2 $alu and 1 $macc cells.
+
+2.15. Executing SHARE pass (SAT-based resource sharing).
+
+2.16. Executing OPT pass (performing simple optimizations).
+
+2.16.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.16.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.16.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~2 debug messages>
+
+2.16.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.16.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.16.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.16.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.16.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.16.9. Finished fast OPT passes. (There is nothing left to do.)
+
+2.17. Executing MEMORY pass.
+
+2.17.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+2.17.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+2.17.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+2.17.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+2.17.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+2.17.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.17.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+2.17.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+2.17.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.17.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+2.18. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.19. Executing OPT pass (performing simple optimizations).
+
+2.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.19.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.19.5. Finished fast OPT passes.
+
+2.20. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+2.21. Executing OPT pass (performing simple optimizations).
+
+2.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.21.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~2 debug messages>
+
+2.21.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.21.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.21.6. Executing OPT_SHARE pass.
+    Found cells that share an operand and can be merged by moving the $mux $flatten\u_acc.$ternary$rtl/dialectfp4_mac.v:62$11 in front of them:
+        $auto$alumacc.cc:578:replace_alu$31
+        $auto$alumacc.cc:578:replace_alu$28
+
+2.21.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.21.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+Removed 0 unused cells and 6 unused wires.
+<suppressed ~1 debug messages>
+
+2.21.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+<suppressed ~1 debug messages>
+
+2.21.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+2.21.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~2 debug messages>
+
+2.21.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.21.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.21.14. Executing OPT_SHARE pass.
+
+2.21.15. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.21.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+2.21.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.21.18. Rerunning OPT passes. (Maybe there is more to do..)
+
+2.21.19. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \dialectfp4_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~2 debug messages>
+
+2.21.20. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \dialectfp4_mac.
+Performed a total of 0 changes.
+
+2.21.21. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 13 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.21.22. Executing OPT_SHARE pass.
+
+2.21.23. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.21.24. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+
+2.21.25. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.21.26. Finished fast OPT passes. (There is nothing left to do.)
+
+2.22. Executing TECHMAP pass (map to technology primitives).
+
+2.22.1. Executing Verilog-2005 frontend: /opt/homebrew/Cellar/yosys/0.70/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/opt/homebrew/Cellar/yosys/0.70/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+2.22.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $mux.
+Running "alumacc" on wrapper $extern:wrap:$neg:Y_WIDTH=15:A_WIDTH=15:A_SIGNED=1:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $extern:wrap:$neg:Y_WIDTH=15:A_WIDTH=15:A_SIGNED=1:394426c56d1a028ba8fdd5469b163e04011def47 for cells of type $extern:wrap:$neg:Y_WIDTH=15:A_WIDTH=15:A_SIGNED=1:394426c56d1a028ba8fdd5469b163e04011def47.
+Using template $paramod$f9c19ff4cb4a16225c995ba7d19f84b51b027f23\_90_alu for cells of type $alu.
+Using extmapper maccmap for cells of type $macc_v2.
+  add \na_r * \nb_r (4x4 bits, unsigned)
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper simplemap for cells of type $dff.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000001000 for cells of type $fa.
+Using template $paramod$a1bc51c02ce12ac21eb18988e83292af48ed7d72\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $and.
+Using template $paramod$aa43f2dbffadf36a7e9a5a6a61a7417f2989191d\_90_alu for cells of type $alu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000001111 for cells of type $fa.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001111 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $or.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001000 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~553 debug messages>
+
+2.23. Executing OPT pass (performing simple optimizations).
+
+2.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+<suppressed ~341 debug messages>
+
+2.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 274 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Computing hashes of 267 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Computing hashes of 261 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Computing hashes of 255 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+<suppressed ~57 debug messages>
+Removed a total of 19 cells.
+
+2.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+Removed 17 unused cells and 203 unused wires.
+<suppressed ~18 debug messages>
+
+2.23.5. Finished fast OPT passes.
+
+2.24. Executing ABC pass (technology mapping using ABC).
+
+2.24.1. Summary of detected clock domains:
+  2 cells in clk={ }, en={ }, arst={ }, srst={ }
+  208 cells in clk=\clk, en=\valid_r, arst={ }, srst=\clear
+  28 cells in clk=\clk, en={ }, arst={ }, srst={ }
+
+2.24.2. Extracting gate netlist of module `\dialectfp4_mac' to `<abc-temp-dir>/input.blif'..
+No matching clock domain found. Not extracting any FF cells.
+
+2.24.3. Extracting gate netlist of module `\dialectfp4_mac' to `<abc-temp-dir>/input.blif'..
+Found matching posedge clock domain: \clk, enabled by \valid_r, synchronously reset by \clear
+
+2.24.3.1. Executed ABC.
+Extracted 0 gates and 0 wires to a netlist network with 0 inputs and 0 outputs.
+Don't call ABC as there is nothing to map.
+Removing temp directory.
+
+2.24.4. Extracting gate netlist of module `\dialectfp4_mac' to `<abc-temp-dir>/input.blif'..
+Found matching posedge clock domain: \clk
+
+2.24.4.1. Executed ABC.
+Extracted 193 gates and 226 wires to a netlist network with 32 inputs and 15 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+2.24.4.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       13
+ABC RESULTS:            ANDNOT cells:        4
+ABC RESULTS:               MUX cells:        1
+ABC RESULTS:              NAND cells:       52
+ABC RESULTS:               NOR cells:        2
+ABC RESULTS:                OR cells:       18
+ABC RESULTS:             ORNOT cells:        2
+ABC RESULTS:              XNOR cells:       24
+ABC RESULTS:               XOR cells:       30
+ABC RESULTS:        internal signals:      179
+ABC RESULTS:           input signals:       32
+ABC RESULTS:          output signals:       15
+Removing temp directory.
+
+2.24.4.1. Executed ABC.
+Extracted 17 gates and 27 wires to a netlist network with 10 inputs and 17 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+2.24.4.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       16
+ABC RESULTS:               XOR cells:        1
+ABC RESULTS:        internal signals:        0
+ABC RESULTS:           input signals:       10
+ABC RESULTS:          output signals:       17
+Removing temp directory.
+Removing global temp directory.
+
+2.25. Executing OPT pass (performing simple optimizations).
+
+2.25.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module dialectfp4_mac.
+
+2.25.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\dialectfp4_mac'.
+Computing hashes of 191 cells of `\dialectfp4_mac'.
+Finding duplicate cells in `\dialectfp4_mac'.
+Removed a total of 0 cells.
+
+2.25.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+2.25.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \dialectfp4_mac..
+Removed 0 unused cells and 143 unused wires.
+<suppressed ~1 debug messages>
+
+2.25.5. Finished fast OPT passes.
+
+2.26. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `dialectfp4_mac'. Setting top module to dialectfp4_mac.
+
+2.26.1. Analyzing design hierarchy..
+Top module:  \dialectfp4_mac
+
+2.26.2. Analyzing design hierarchy..
+Top module:  \dialectfp4_mac
+Removed 0 unused modules.
+
+2.27. Printing statistics.
+
+=== dialectfp4_mac ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      164 wires
+      287 wire bits
+       28 public wires
+      109 public wire bits
+        8 ports
+       28 port bits
+      191 cells
+        4   $_ANDNOT_
+       29   $_AND_
+       11   $_DFF_P_
+        1   $_MUX_
+       52   $_NAND_
+        2   $_NOR_
+        2   $_ORNOT_
+       18   $_OR_
+       15   $_SDFFE_PP0P_
+       24   $_XNOR_
+       31   $_XOR_
+        2   $scopeinfo
+
+2.28. Executing CHECK pass (checking for obvious problems).
+Checking module dialectfp4_mac...
+Found and reported 0 problems.
+
+3. Executing DFFLIBMAP pass (mapping DFF/DLATCH cells to sequential cells from liberty file).
+  cell DFF_X1 (noninv, pins=4, area=4.52) is a direct match for cell type $_DFF_P_.
+  cell DFFR_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN0_.
+  cell DFFS_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN1_.
+  cell DFFRS_X1 (noninv, pins=6, area=6.38) is a direct match for cell type $_DFFSR_PNN_.
+  cell DLL_X1 (noninv, pins=3, area=2.66) is a direct match for cell type $_DLATCH_N_.
+  cell DLH_X1 (noninv, pins=3, area=2.66) is a direct match for cell type $_DLATCH_P_.
+  final dff/dlatch cell mappings:
+    unmapped dff/dlatch cell: $_DFF_N_
+    \DFF_X1 _DFF_P_ (.CK( C), .D( D), .Q( Q), .QN(~Q));
+    unmapped dff/dlatch cell: $_DFF_NN0_
+    unmapped dff/dlatch cell: $_DFF_NN1_
+    unmapped dff/dlatch cell: $_DFF_NP0_
+    unmapped dff/dlatch cell: $_DFF_NP1_
+    \DFFR_X1 _DFF_PN0_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R));
+    \DFFS_X1 _DFF_PN1_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .SN( R));
+    unmapped dff/dlatch cell: $_DFF_PP0_
+    unmapped dff/dlatch cell: $_DFF_PP1_
+    unmapped dff/dlatch cell: $_DFFE_NN_
+    unmapped dff/dlatch cell: $_DFFE_NP_
+    unmapped dff/dlatch cell: $_DFFE_PN_
+    unmapped dff/dlatch cell: $_DFFE_PP_
+    unmapped dff/dlatch cell: $_DFFSR_NNN_
+    unmapped dff/dlatch cell: $_DFFSR_NNP_
+    unmapped dff/dlatch cell: $_DFFSR_NPN_
+    unmapped dff/dlatch cell: $_DFFSR_NPP_
+    \DFFRS_X1 _DFFSR_PNN_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN( S));
+    unmapped dff/dlatch cell: $_DFFSR_PNP_
+    unmapped dff/dlatch cell: $_DFFSR_PPN_
+    unmapped dff/dlatch cell: $_DFFSR_PPP_
+    \DLL_X1 _DLATCH_N_ (.D( D), .GN( E), .Q( Q));
+    \DLH_X1 _DLATCH_P_ (.D( D), .G( E), .Q( Q));
+    unmapped dff/dlatch cell: $_DLATCH_NN0_
+    unmapped dff/dlatch cell: $_DLATCH_NN1_
+    unmapped dff/dlatch cell: $_DLATCH_NP0_
+    unmapped dff/dlatch cell: $_DLATCH_NP1_
+    unmapped dff/dlatch cell: $_DLATCH_PN0_
+    unmapped dff/dlatch cell: $_DLATCH_PN1_
+    unmapped dff/dlatch cell: $_DLATCH_PP0_
+    unmapped dff/dlatch cell: $_DLATCH_PP1_
+    unmapped dff/dlatch cell: $_DLATCHSR_NNN_
+    unmapped dff/dlatch cell: $_DLATCHSR_NNP_
+    unmapped dff/dlatch cell: $_DLATCHSR_NPN_
+    unmapped dff/dlatch cell: $_DLATCHSR_NPP_
+    unmapped dff/dlatch cell: $_DLATCHSR_PNN_
+    unmapped dff/dlatch cell: $_DLATCHSR_PNP_
+    unmapped dff/dlatch cell: $_DLATCHSR_PPN_
+    unmapped dff/dlatch cell: $_DLATCHSR_PPP_
+
+3.1. Executing DFFLEGALIZE pass (convert FFs and LATCHes to types supported by the target).
+<suppressed ~8 debug messages>
+Mapping DFF/DLATCH cells in module `\dialectfp4_mac':
+  mapped 26 $_DFF_P_ cells to \DFF_X1 cells.
+
+4. Executing ABC pass (technology mapping using ABC).
+
+4.1. Summary of detected clock domains:
+  221 cells in clk={ }, en={ }, arst={ }, srst={ }
+
+4.2. Extracting gate netlist of module `\dialectfp4_mac' to `<abc-temp-dir>/input.blif'..
+ABC: using cached merged SCL: /var/folders/kh/vbx1jvjd4b959f6p2pcvw8t40000gn/T/yosys-liberty-scl-cache-501/yosys_merged_32a7322f.scl (1 files)
+No matching clock domain found. Not extracting any FF cells.
+
+4.2.1. Executed ABC.
+Extracted 193 gates and 221 wires to a netlist network with 27 inputs and 15 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_scl /var/folders/kh/vbx1jvjd4b959f6p2pcvw8t40000gn/T/yosys-liberty-scl-cache-501/yosys_merged_32a7322f.scl 
+ABC: Warning: Detected 2 multi-output cells (for example, "FA_X1").
+ABC: + source synth/abc_timing.script 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: WireLoad = "none"  Gates =    182 (  3.3 %)   Cap =  4.5 ff (  9.1 %)   Area =      247.91 ( 79.1 %)   Delay =   809.75 ps  ( 31.3 %)               
+ABC: Path  0 --      23 : 0    5 pi        A =   0.00  Df =   0.0   -0.0 ps  S =   0.0 ps  Cin =  0.0 ff  Cout =  17.1 ff  Cmax =   0.0 ff  G =    0  
+ABC: Path  1 --      47 : 4    3 AOI22_X4  A =   4.52  Df =  43.7  -26.4 ps  S =  26.4 ps  Cin =  6.2 ff  Cout =   8.1 ff  Cmax =  98.0 ff  G =  126  
+ABC: Path  2 --      48 : 3    3 OR3_X4    A =   2.93  Df =  91.4  -11.6 ps  S =  12.0 ps  Cin =  3.2 ff  Cout =   6.7 ff  Cmax = 242.3 ff  G =  201  
+ABC: Path  3 --      64 : 3    2 AND3_X2   A =   1.60  Df = 124.8   -1.6 ps  S =  13.8 ps  Cin =  1.6 ff  Cout =   6.7 ff  Cmax = 120.5 ff  G =  393  
+ABC: Path  4 --      65 : 3    4 OR3_X4    A =   2.93  Df = 182.5  -13.6 ps  S =  12.3 ps  Cin =  3.2 ff  Cout =   7.6 ff  Cmax = 242.3 ff  G =  229  
+ABC: Path  5 --     107 : 3    1 AOI21_X2  A =   1.86  Df = 214.6  -30.6 ps  S =  21.2 ps  Cin =  3.1 ff  Cout =   3.3 ff  Cmax =  50.7 ff  G =  106  
+ABC: Path  6 --     108 : 4    2 OAI22_X2  A =   2.39  Df = 256.3  -14.2 ps  S =  36.2 ps  Cin =  3.1 ff  Cout =   5.9 ff  Cmax =  46.3 ff  G =  185  
+ABC: Path  7 --     109 : 3    3 OAI21_X2  A =   1.86  Df = 282.5   -0.7 ps  S =  24.2 ps  Cin =  3.1 ff  Cout =   5.9 ff  Cmax =  52.1 ff  G =  183  
+ABC: Path  8 --     121 : 3    1 OAI21_X1  A =   1.06  Df = 308.4   -2.8 ps  S =  21.5 ps  Cin =  1.6 ff  Cout =   2.4 ff  Cmax =  26.1 ff  G =  151  
+ABC: Path  9 --     122 : 2    2 XOR2_X1   A =   1.60  Df = 367.6   -2.8 ps  S =  29.5 ps  Cin =  2.3 ff  Cout =   3.3 ff  Cmax =  25.3 ff  G =  144  
+ABC: Path 10 --     143 : 2    2 XOR2_X1   A =   1.60  Df = 453.3  -18.1 ps  S =  57.0 ps  Cin =  2.3 ff  Cout =   9.3 ff  Cmax =  25.3 ff  G =  376  
+ABC: Path 11 --     144 : 3    2 AOI21_X4  A =   3.46  Df = 472.7   -4.1 ps  S =  20.0 ps  Cin =  6.0 ff  Cout =   5.3 ff  Cmax = 101.0 ff  G =   84  
+ABC: Path 12 --     146 : 3    2 OAI21_X2  A =   1.86  Df = 548.6  -57.4 ps  S =  32.1 ps  Cin =  3.1 ff  Cout =   9.3 ff  Cmax =  52.1 ff  G =  280  
+ABC: Path 13 --     147 : 3    3 AOI21_X4  A =   3.46  Df = 567.9  -42.9 ps  S =  21.8 ps  Cin =  6.0 ff  Cout =   7.0 ff  Cmax = 101.0 ff  G =  114  
+ABC: Path 14 --     163 : 4    2 OAI211_X2 A =   2.39  Df = 605.6  -54.8 ps  S =  21.4 ps  Cin =  3.1 ff  Cout =   3.4 ff  Cmax =  50.8 ff  G =  102  
+ABC: Path 15 --     164 : 3    4 AND3_X2   A =   1.60  Df = 653.7  -62.5 ps  S =  12.9 ps  Cin =  1.6 ff  Cout =   5.8 ff  Cmax = 120.5 ff  G =  349  
+ABC: Path 16 --     165 : 6    4 OAI33_X1  A =   1.86  Df = 704.7  -15.2 ps  S =  89.1 ps  Cin =  1.5 ff  Cout =   5.8 ff  Cmax =  11.5 ff  G =  363  
+ABC: Path 17 --     166 : 3    2 OAI21_X1  A =   1.06  Df = 734.8   -3.1 ps  S =  25.1 ps  Cin =  1.6 ff  Cout =   2.6 ff  Cmax =  26.1 ff  G =  155  
+ABC: Path 18 --     173 : 3    1 AND3_X1   A =   1.33  Df = 782.7   -7.1 ps  S =  10.3 ps  Cin =  0.9 ff  Cout =   1.6 ff  Cmax =  60.4 ff  G =  175  
+ABC: Path 19 --     174 : 3    1 NOR3_X1   A =   1.06  Df = 809.7  -19.3 ps  S =  14.6 ps  Cin =  1.6 ff  Cout =   0.0 ff  Cmax =  16.0 ff  G =    0  
+ABC: Start-point = pi22 (\nb_r [3]).  End-point = po1 ($auto$rtlil.cc:3492:MuxGate$944).
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+4.2.2. Re-integrating ABC results.
+ABC RESULTS:           AND2_X1 cells:        6
+ABC RESULTS:           AND3_X1 cells:        2
+ABC RESULTS:           AND3_X2 cells:        4
+ABC RESULTS:           AND4_X1 cells:        1
+ABC RESULTS:           AND4_X4 cells:        2
+ABC RESULTS:         AOI211_X1 cells:       11
+ABC RESULTS:          AOI21_X1 cells:       13
+ABC RESULTS:          AOI21_X2 cells:        3
+ABC RESULTS:          AOI21_X4 cells:        2
+ABC RESULTS:          AOI22_X1 cells:        3
+ABC RESULTS:          AOI22_X4 cells:        1
+ABC RESULTS:            BUF_X1 cells:        1
+ABC RESULTS:            INV_X1 cells:        5
+ABC RESULTS:          NAND2_X1 cells:       21
+ABC RESULTS:          NAND2_X2 cells:        3
+ABC RESULTS:          NAND2_X4 cells:        1
+ABC RESULTS:          NAND3_X1 cells:        4
+ABC RESULTS:          NAND4_X1 cells:        1
+ABC RESULTS:           NOR2_X1 cells:       22
+ABC RESULTS:           NOR2_X2 cells:        1
+ABC RESULTS:           NOR3_X1 cells:        3
+ABC RESULTS:         OAI211_X1 cells:        2
+ABC RESULTS:         OAI211_X2 cells:        1
+ABC RESULTS:          OAI21_X1 cells:       11
+ABC RESULTS:          OAI21_X2 cells:        8
+ABC RESULTS:          OAI22_X1 cells:        1
+ABC RESULTS:          OAI22_X2 cells:        1
+ABC RESULTS:          OAI33_X1 cells:        1
+ABC RESULTS:            OR2_X1 cells:        4
+ABC RESULTS:            OR3_X1 cells:        2
+ABC RESULTS:            OR3_X4 cells:        3
+ABC RESULTS:          XNOR2_X1 cells:       20
+ABC RESULTS:          XNOR2_X2 cells:        4
+ABC RESULTS:           XOR2_X1 cells:       11
+ABC RESULTS:           XOR2_X2 cells:        3
+ABC RESULTS:        internal signals:      179
+ABC RESULTS:           input signals:       27
+ABC RESULTS:          output signals:       15
+Removing temp directory.
+Removing global temp directory.
+
+End of script. Logfile hash: 0cbca44d7e, time: 0.43s, user: 0.07s, system: 0.01s, MEM: 19.02 MB peak
+Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 17.0.0.17000604)
+Time spent: 80% 2x abc (0 sec), 6% 1x dfflibmap (0 sec), ...

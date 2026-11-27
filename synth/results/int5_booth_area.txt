@@ -1,0 +1,139 @@
+
+7. Printing statistics.
+
+=== int_mac ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+       21        - wires
+       61        - wire bits
+       10        - public wires
+       50        - public wire bits
+        6        - ports
+       29        - port bits
+       11   49.742 cells
+       11   49.742   DFF_X1
+        2        - submodules
+        1        -   $paramod$9d2ea0ffb2a70d5bc467e417c0232769ad87bc7a\int_acc
+        1        -   $paramod\int_mul\WIDTH=s32'00000000000000000000000000000101
+
+   Chip area for module '\int_mac': 49.742000
+     of which used for sequential elements: 49.742000 (100.00%)
+
+=== $paramod$9d2ea0ffb2a70d5bc467e417c0232769ad87bc7a\int_acc ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+      125        - wires
+      149        - wire bits
+        5        - public wires
+       29        - public wire bits
+        5        - ports
+       29        - port bits
+      120  189.658 cells
+        4    4.256   AND2_X1
+        2     2.66   AND3_X1
+        2     2.66   AOI211_X1
+       24   25.536   AOI21_X1
+       16   72.352   DFF_X1
+        8    4.256   INV_X1
+       11    8.778   NAND2_X1
+        1     1.33   NAND4_X1
+        4    3.192   NOR2_X1
+        2    2.128   NOR3_X1
+       19   20.216   OAI21_X1
+        3     3.99   OR3_X1
+       18   28.728   XNOR2_X1
+        6    9.576   XOR2_X1
+
+   Chip area for module '$paramod$9d2ea0ffb2a70d5bc467e417c0232769ad87bc7a\int_acc': 189.658000
+     of which used for sequential elements: 72.352000 (38.15%)
+
+=== $paramod\int_mul\WIDTH=s32'00000000000000000000000000000101 ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+      123        - wires
+      140        - wire bits
+        3        - public wires
+       20        - public wire bits
+        3        - ports
+       20        - port bits
+      130  150.024 cells
+        6    6.384   AND2_X1
+        4     5.32   AND3_X1
+        1    1.596   AND4_X1
+        1     1.33   AOI211_X1
+       18   19.152   AOI21_X1
+        3     3.99   AOI22_X1
+        8    4.256   INV_X1
+        7   13.034   MUX2_X1
+       20    15.96   NAND2_X1
+        5     5.32   NAND3_X1
+        1     1.33   NAND4_X1
+        9    7.182   NOR2_X1
+        4    4.256   NOR3_X1
+        1     1.33   NOR4_X1
+        2     2.66   OAI211_X1
+        9    9.576   OAI21_X1
+        3    3.192   OR2_X1
+        2     2.66   OR3_X1
+       15    23.94   XNOR2_X1
+       11   17.556   XOR2_X1
+
+   Chip area for module '$paramod\int_mul\WIDTH=s32'00000000000000000000000000000101': 150.024000
+     of which used for sequential elements: 0.000000 (0.00%)
+
+=== design hierarchy ===
+
+        +----------Count including submodules.
+        |        +-Area including submodules.
+        |        | 
+      261  389.424 int_mac
+      120  189.658 $paramod$9d2ea0ffb2a70d5bc467e417c0232769ad87bc7a\int_acc
+      130  150.024 $paramod\int_mul\WIDTH=s32'00000000000000000000000000000101
+
+        +----------Count including submodules.
+        |        +-Area including submodules.
+        |        | 
+      269        - wires
+      350        - wire bits
+       18        - public wires
+       99        - public wire bits
+       14        - ports
+       78        - port bits
+        -        - memories
+        -        - memory bits
+        -        - processes
+      261  389.424 cells
+       10    10.64   AND2_X1
+        6     7.98   AND3_X1
+        1    1.596   AND4_X1
+        3     3.99   AOI211_X1
+       42   44.688   AOI21_X1
+        3     3.99   AOI22_X1
+       27  122.094   DFF_X1
+       16    8.512   INV_X1
+        7   13.034   MUX2_X1
+       31   24.738   NAND2_X1
+        5     5.32   NAND3_X1
+        2     2.66   NAND4_X1
+       13   10.374   NOR2_X1
+        6    6.384   NOR3_X1
+        1     1.33   NOR4_X1
+        2     2.66   OAI211_X1
+       28   29.792   OAI21_X1
+        3    3.192   OR2_X1
+        5     6.65   OR3_X1
+       33   52.668   XNOR2_X1
+       17   27.132   XOR2_X1
+        2  339.682 submodules
+        1  189.658   $paramod$9d2ea0ffb2a70d5bc467e417c0232769ad87bc7a\int_acc
+        1  150.024   $paramod\int_mul\WIDTH=s32'00000000000000000000000000000101
+
+   Chip area for top module '\int_mac': 389.424000
+     of which used for sequential elements: 122.094000 (31.35%)
+

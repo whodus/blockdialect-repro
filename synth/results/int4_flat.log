@@ -1,0 +1,831 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 17.0.0.17000604)
+
+-- Running command `
+  read_verilog rtl/int_mac.v
+  chparam -set WIDTH 4 int_mac
+  synth -flatten -top int_mac
+  dfflibmap -liberty NangateOpenCellLibrary_typical.lib
+  abc -liberty NangateOpenCellLibrary_typical.lib -D 2000
+  opt_clean
+  tee -o synth/results/int4_flat_area.txt stat -liberty NangateOpenCellLibrary_typical.lib
+' --
+
+1. Executing Verilog-2005 frontend: rtl/int_mac.v
+Parsing Verilog input from `rtl/int_mac.v' to AST representation.
+Generating RTLIL representation for module `\int_mul'.
+Generating RTLIL representation for module `\int_acc'.
+Generating RTLIL representation for module `\int_mac'.
+Successfully finished Verilog frontend.
+Parameter \WIDTH = 4
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\int_mac'.
+Parameter \WIDTH = 4
+Generating RTLIL representation for module `$paramod\int_mac\WIDTH=s32'00000000000000000000000000000100'.
+
+3. Executing SYNTH pass.
+
+3.1. Executing HIERARCHY pass (managing design hierarchy).
+
+3.1.1. Analyzing design hierarchy..
+Top module:  \int_mac
+Used module:     \int_mul
+Used module:     \int_acc
+Parameter \WIDTH = 4
+
+3.1.2. Executing AST frontend in derive mode using pre-parsed AST for module `\int_mul'.
+Parameter \WIDTH = 4
+Generating RTLIL representation for module `$paramod\int_mul\WIDTH=s32'00000000000000000000000000000100'.
+Parameter \PW = 8
+Parameter \AW = 14
+
+3.1.3. Executing AST frontend in derive mode using pre-parsed AST for module `\int_acc'.
+Parameter \PW = 8
+Parameter \AW = 14
+Generating RTLIL representation for module `$paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc'.
+
+3.1.4. Analyzing design hierarchy..
+Top module:  \int_mac
+Used module:     $paramod\int_mul\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc
+
+3.1.5. Analyzing design hierarchy..
+Top module:  \int_mac
+Used module:     $paramod\int_mul\WIDTH=s32'00000000000000000000000000000100
+Used module:     $paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc
+Removing unused module `\int_acc'.
+Removing unused module `\int_mul'.
+Removed 2 unused modules.
+
+3.2. Executing PROC pass (convert processes to netlists).
+
+3.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+3.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$rtl/int_mac.v:46$7 in module $paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.
+Removed a total of 0 dead cases.
+
+3.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 3 assignments to connections.
+
+3.2.4. Executing PROC_INIT pass (extract init attributes).
+
+3.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+3.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~2 debug messages>
+
+3.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\int_mac.$proc$rtl/int_mac.v:69$5'.
+Creating decoders for process `$paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.$proc$rtl/int_mac.v:46$7'.
+     1/1: $0\acc[13:0]
+
+3.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+3.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\int_mac.\a_r' using process `\int_mac.$proc$rtl/int_mac.v:69$5'.
+  created $dff cell `$procdff$14' with positive edge clock.
+Creating register for signal `\int_mac.\b_r' using process `\int_mac.$proc$rtl/int_mac.v:69$5'.
+  created $dff cell `$procdff$15' with positive edge clock.
+Creating register for signal `\int_mac.\valid_r' using process `\int_mac.$proc$rtl/int_mac.v:69$5'.
+  created $dff cell `$procdff$16' with positive edge clock.
+Creating register for signal `$paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.\acc' using process `$paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.$proc$rtl/int_mac.v:46$7'.
+  created $dff cell `$procdff$17' with positive edge clock.
+
+3.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+3.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `int_mac.$proc$rtl/int_mac.v:69$5'.
+Found and cleaned up 2 empty switches in `$paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.$proc$rtl/int_mac.v:46$7'.
+Removing empty process `$paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.$proc$rtl/int_mac.v:46$7'.
+Cleaned up 2 empty switches.
+
+3.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+Optimizing module $paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.
+Optimizing module $paramod\int_mul\WIDTH=s32'00000000000000000000000000000100.
+
+3.3. Executing CHECK pass (checking for obvious problems).
+Checking module int_mac...
+Checking module $paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc...
+Checking module $paramod\int_mul\WIDTH=s32'00000000000000000000000000000100...
+Found and reported 0 problems.
+
+3.4. Executing FLATTEN pass (flatten design).
+Deleting now unused module $paramod$c3db320dda37e054b26a43c7ebea3b399a08f55b\int_acc.
+Deleting now unused module $paramod\int_mul\WIDTH=s32'00000000000000000000000000000100.
+<suppressed ~2 debug messages>
+
+3.5. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.6. Executing CHECK pass (checking for obvious problems).
+Checking module int_mac...
+Found and reported 0 problems.
+
+3.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+Removed 0 unused cells and 7 unused wires.
+<suppressed ~1 debug messages>
+
+3.8. Executing OPT pass (performing simple optimizations).
+
+3.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 10 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \int_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~3 debug messages>
+
+3.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \int_mac.
+Performed a total of 0 changes.
+
+3.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 10 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.8.9. Finished fast OPT passes. (There is nothing left to do.)
+
+3.9. Executing FSM pass (extract and optimize FSM).
+
+3.9.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+3.9.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+3.9.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+3.9.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.9.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+3.9.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+3.9.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+3.9.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+3.10. Executing OPT pass (performing simple optimizations).
+
+3.10.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.10.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 10 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.10.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \int_mac..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~3 debug messages>
+
+3.10.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \int_mac.
+Performed a total of 0 changes.
+
+3.10.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 10 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.10.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $flatten\u_acc.$procdff$17 ($dff) from module int_mac (D = $flatten\u_acc.$procmux$9_Y, Q = \u_acc.acc, rval = 14'00000000000000).
+Adding EN signal on $auto$ff.cc:337:slice$20 ($sdff) from module int_mac (D = $flatten\u_acc.$add$rtl/int_mac.v:50$8_Y, Q = \u_acc.acc).
+
+3.10.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+Removed 2 unused cells and 2 unused wires.
+<suppressed ~3 debug messages>
+
+3.10.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.10.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+3.10.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \int_mac..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+3.10.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \int_mac.
+Performed a total of 0 changes.
+
+3.10.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 8 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.10.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.10.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.10.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.10.16. Finished fast OPT passes. (There is nothing left to do.)
+
+3.11. Executing WREDUCE pass (reducing word size of cells).
+
+3.12. Executing PEEPOPT pass (run peephole optimizers).
+
+3.13. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.14. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module int_mac:
+  creating $macc model for $flatten\u_mul.$mul$rtl/int_mac.v:31$6 ($mul).
+  creating $macc model for $flatten\u_acc.$add$rtl/int_mac.v:50$8 ($add).
+  merging $macc model for $flatten\u_mul.$mul$rtl/int_mac.v:31$6 into $flatten\u_acc.$add$rtl/int_mac.v:50$8.
+  creating $macc cell for $flatten\u_acc.$add$rtl/int_mac.v:50$8: $auto$alumacc.cc:427:replace_macc$22
+  created 0 $alu and 1 $macc cells.
+
+3.15. Executing SHARE pass (SAT-based resource sharing).
+
+3.16. Executing OPT pass (performing simple optimizations).
+
+3.16.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.16.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 8 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.16.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \int_mac..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+3.16.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \int_mac.
+Performed a total of 0 changes.
+
+3.16.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 8 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.16.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.16.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+Removed 1 unused cells and 3 unused wires.
+<suppressed ~4 debug messages>
+
+3.16.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.16.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+3.16.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \int_mac..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+3.16.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \int_mac.
+Performed a total of 0 changes.
+
+3.16.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 7 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.16.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.16.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.16.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.16.16. Finished fast OPT passes. (There is nothing left to do.)
+
+3.17. Executing MEMORY pass.
+
+3.17.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+3.17.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+3.17.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+3.17.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+3.17.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+3.17.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.17.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+3.17.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+3.17.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.17.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+3.18. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.19. Executing OPT pass (performing simple optimizations).
+
+3.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 7 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.19.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.19.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.19.5. Finished fast OPT passes.
+
+3.20. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+3.21. Executing OPT pass (performing simple optimizations).
+
+3.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 7 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.21.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \int_mac..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+3.21.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \int_mac.
+Performed a total of 0 changes.
+
+3.21.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 7 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.21.6. Executing OPT_SHARE pass.
+
+3.21.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.21.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+
+3.21.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+
+3.21.10. Finished fast OPT passes. (There is nothing left to do.)
+
+3.22. Executing TECHMAP pass (map to technology primitives).
+
+3.22.1. Executing Verilog-2005 frontend: /opt/homebrew/Cellar/yosys/0.70/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/opt/homebrew/Cellar/yosys/0.70/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `$__div_mod_u'.
+Generating RTLIL representation for module `$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Generating RTLIL representation for module `$connect'.
+Generating RTLIL representation for module `$input_port'.
+Successfully finished Verilog frontend.
+
+3.22.2. Continuing TECHMAP pass.
+Using extmapper maccmap for cells of type $macc_v2.
+  add \a_r * \b_r (4x4 bits, signed)
+  add \u_acc.acc (14 bits, signed)
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper simplemap for cells of type $dff.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000001110 for cells of type $fa.
+Using template $paramod$091610cd349a68bd5539cffd7126f0d76e9bca00\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001110 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using extmapper simplemap for cells of type $mux.
+No more expansions possible.
+<suppressed ~302 debug messages>
+
+3.23. Executing OPT pass (performing simple optimizations).
+
+3.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+<suppressed ~151 debug messages>
+
+3.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 386 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Computing hashes of 352 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Computing hashes of 345 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Computing hashes of 331 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Computing hashes of 317 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Computing hashes of 310 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Computing hashes of 298 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+<suppressed ~264 debug messages>
+Removed a total of 88 cells.
+
+3.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+Removed 25 unused cells and 89 unused wires.
+<suppressed ~26 debug messages>
+
+3.23.5. Finished fast OPT passes.
+
+3.24. Executing ABC pass (technology mapping using ABC).
+
+3.24.1. Summary of detected clock domains:
+  2 cells in clk={ }, en={ }, arst={ }, srst={ }
+  240 cells in clk=\clk, en=\valid_r, arst={ }, srst=\clear
+  31 cells in clk=\clk, en={ }, arst={ }, srst={ }
+
+3.24.2. Extracting gate netlist of module `\int_mac' to `<abc-temp-dir>/input.blif'..
+No matching clock domain found. Not extracting any FF cells.
+
+3.24.3. Extracting gate netlist of module `\int_mac' to `<abc-temp-dir>/input.blif'..
+Found matching posedge clock domain: \clk, enabled by \valid_r, synchronously reset by \clear
+
+3.24.3.1. Executed ABC.
+Extracted 0 gates and 0 wires to a netlist network with 0 inputs and 0 outputs.
+Don't call ABC as there is nothing to map.
+Removing temp directory.
+
+3.24.4. Extracting gate netlist of module `\int_mac' to `<abc-temp-dir>/input.blif'..
+Found matching posedge clock domain: \clk
+
+3.24.4.1. Executed ABC.
+Extracted 226 gates and 258 wires to a netlist network with 32 inputs and 14 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+3.24.4.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       15
+ABC RESULTS:            ANDNOT cells:        2
+ABC RESULTS:               MUX cells:        2
+ABC RESULTS:              NAND cells:       93
+ABC RESULTS:               NOT cells:        1
+ABC RESULTS:                OR cells:        6
+ABC RESULTS:              XNOR cells:       12
+ABC RESULTS:               XOR cells:       71
+ABC RESULTS:        internal signals:      212
+ABC RESULTS:           input signals:       32
+ABC RESULTS:          output signals:       14
+Removing temp directory.
+
+3.24.4.1. Executed ABC.
+Extracted 22 gates and 30 wires to a netlist network with 8 inputs and 18 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+3.24.4.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       13
+ABC RESULTS:            ANDNOT cells:        4
+ABC RESULTS:               XOR cells:        1
+ABC RESULTS:        internal signals:        4
+ABC RESULTS:           input signals:        8
+ABC RESULTS:          output signals:       18
+Removing temp directory.
+Removing global temp directory.
+
+3.25. Executing OPT pass (performing simple optimizations).
+
+3.25.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module int_mac.
+<suppressed ~1 debug messages>
+
+3.25.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\int_mac'.
+Computing hashes of 245 cells of `\int_mac'.
+Finding duplicate cells in `\int_mac'.
+Removed a total of 0 cells.
+
+3.25.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+3.25.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+Removed 0 unused cells and 119 unused wires.
+<suppressed ~1 debug messages>
+
+3.25.5. Finished fast OPT passes.
+
+3.26. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `int_mac'. Setting top module to int_mac.
+
+3.26.1. Analyzing design hierarchy..
+Top module:  \int_mac
+
+3.26.2. Analyzing design hierarchy..
+Top module:  \int_mac
+Removed 0 unused modules.
+
+3.27. Printing statistics.
+
+=== int_mac ===
+
+        +----------Local Count, excluding submodules.
+        | 
+      213 wires
+      387 wire bits
+       15 public wires
+       59 public wire bits
+        6 ports
+       25 port bits
+      245 cells
+        6   $_ANDNOT_
+       28   $_AND_
+        9   $_DFF_P_
+        2   $_MUX_
+       93   $_NAND_
+        1   $_NOT_
+        6   $_OR_
+       14   $_SDFFE_PP0P_
+       12   $_XNOR_
+       72   $_XOR_
+        2   $scopeinfo
+
+3.28. Executing CHECK pass (checking for obvious problems).
+Checking module int_mac...
+Found and reported 0 problems.
+
+4. Executing DFFLIBMAP pass (mapping DFF/DLATCH cells to sequential cells from liberty file).
+  cell DFF_X1 (noninv, pins=4, area=4.52) is a direct match for cell type $_DFF_P_.
+  cell DFFR_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN0_.
+  cell DFFS_X1 (noninv, pins=5, area=5.32) is a direct match for cell type $_DFF_PN1_.
+  cell DFFRS_X1 (noninv, pins=6, area=6.38) is a direct match for cell type $_DFFSR_PNN_.
+  cell DLL_X1 (noninv, pins=3, area=2.66) is a direct match for cell type $_DLATCH_N_.
+  cell DLH_X1 (noninv, pins=3, area=2.66) is a direct match for cell type $_DLATCH_P_.
+  final dff/dlatch cell mappings:
+    unmapped dff/dlatch cell: $_DFF_N_
+    \DFF_X1 _DFF_P_ (.CK( C), .D( D), .Q( Q), .QN(~Q));
+    unmapped dff/dlatch cell: $_DFF_NN0_
+    unmapped dff/dlatch cell: $_DFF_NN1_
+    unmapped dff/dlatch cell: $_DFF_NP0_
+    unmapped dff/dlatch cell: $_DFF_NP1_
+    \DFFR_X1 _DFF_PN0_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R));
+    \DFFS_X1 _DFF_PN1_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .SN( R));
+    unmapped dff/dlatch cell: $_DFF_PP0_
+    unmapped dff/dlatch cell: $_DFF_PP1_
+    unmapped dff/dlatch cell: $_DFFE_NN_
+    unmapped dff/dlatch cell: $_DFFE_NP_
+    unmapped dff/dlatch cell: $_DFFE_PN_
+    unmapped dff/dlatch cell: $_DFFE_PP_
+    unmapped dff/dlatch cell: $_DFFSR_NNN_
+    unmapped dff/dlatch cell: $_DFFSR_NNP_
+    unmapped dff/dlatch cell: $_DFFSR_NPN_
+    unmapped dff/dlatch cell: $_DFFSR_NPP_
+    \DFFRS_X1 _DFFSR_PNN_ (.CK( C), .D( D), .Q( Q), .QN(~Q), .RN( R), .SN( S));
+    unmapped dff/dlatch cell: $_DFFSR_PNP_
+    unmapped dff/dlatch cell: $_DFFSR_PPN_
+    unmapped dff/dlatch cell: $_DFFSR_PPP_
+    \DLL_X1 _DLATCH_N_ (.D( D), .GN( E), .Q( Q));
+    \DLH_X1 _DLATCH_P_ (.D( D), .G( E), .Q( Q));
+    unmapped dff/dlatch cell: $_DLATCH_NN0_
+    unmapped dff/dlatch cell: $_DLATCH_NN1_
+    unmapped dff/dlatch cell: $_DLATCH_NP0_
+    unmapped dff/dlatch cell: $_DLATCH_NP1_
+    unmapped dff/dlatch cell: $_DLATCH_PN0_
+    unmapped dff/dlatch cell: $_DLATCH_PN1_
+    unmapped dff/dlatch cell: $_DLATCH_PP0_
+    unmapped dff/dlatch cell: $_DLATCH_PP1_
+    unmapped dff/dlatch cell: $_DLATCHSR_NNN_
+    unmapped dff/dlatch cell: $_DLATCHSR_NNP_
+    unmapped dff/dlatch cell: $_DLATCHSR_NPN_
+    unmapped dff/dlatch cell: $_DLATCHSR_NPP_
+    unmapped dff/dlatch cell: $_DLATCHSR_PNN_
+    unmapped dff/dlatch cell: $_DLATCHSR_PNP_
+    unmapped dff/dlatch cell: $_DLATCHSR_PPN_
+    unmapped dff/dlatch cell: $_DLATCHSR_PPP_
+
+4.1. Executing DFFLEGALIZE pass (convert FFs and LATCHes to types supported by the target).
+<suppressed ~8 debug messages>
+Mapping DFF/DLATCH cells in module `\int_mac':
+  mapped 23 $_DFF_P_ cells to \DFF_X1 cells.
+
+5. Executing ABC pass (technology mapping using ABC).
+
+5.1. Summary of detected clock domains:
+  273 cells in clk={ }, en={ }, arst={ }, srst={ }
+
+5.2. Extracting gate netlist of module `\int_mac' to `<abc-temp-dir>/input.blif'..
+ABC: using cached merged SCL: /var/folders/kh/vbx1jvjd4b959f6p2pcvw8t40000gn/T/yosys-liberty-scl-cache-501/yosys_merged_32a7322f.scl (1 files)
+No matching clock domain found. Not extracting any FF cells.
+
+5.2.1. Executed ABC.
+Extracted 248 gates and 273 wires to a netlist network with 24 inputs and 14 outputs.
+Running ABC script: <abc-temp-dir>/abc.script
+ABC: ======== ABC command line "source <abc-temp-dir>/abc.script"
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_scl /var/folders/kh/vbx1jvjd4b959f6p2pcvw8t40000gn/T/yosys-liberty-scl-cache-501/yosys_merged_32a7322f.scl 
+ABC: Warning: Detected 2 multi-output cells (for example, "FA_X1").
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + retime -o -D 2000 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf -D 2000 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+5.2.2. Re-integrating ABC results.
+ABC RESULTS:           AND2_X1 cells:        7
+ABC RESULTS:           AND3_X1 cells:       11
+ABC RESULTS:           AND4_X1 cells:        1
+ABC RESULTS:         AOI211_X1 cells:        1
+ABC RESULTS:          AOI21_X1 cells:       40
+ABC RESULTS:         AOI221_X1 cells:        1
+ABC RESULTS:          AOI22_X1 cells:        5
+ABC RESULTS:            INV_X1 cells:       15
+ABC RESULTS:          NAND2_X1 cells:       23
+ABC RESULTS:          NAND3_X1 cells:       15
+ABC RESULTS:          NAND4_X1 cells:        2
+ABC RESULTS:           NOR2_X1 cells:       20
+ABC RESULTS:           NOR3_X1 cells:       13
+ABC RESULTS:         OAI211_X1 cells:        3
+ABC RESULTS:          OAI21_X1 cells:       41
+ABC RESULTS:         OAI221_X1 cells:        1
+ABC RESULTS:          OAI22_X1 cells:        1
+ABC RESULTS:            OR2_X1 cells:        3
+ABC RESULTS:            OR3_X1 cells:        4
+ABC RESULTS:          XNOR2_X1 cells:       38
+ABC RESULTS:           XOR2_X1 cells:       12
+ABC RESULTS:        internal signals:      235
+ABC RESULTS:           input signals:       24
+ABC RESULTS:          output signals:       14
+Removing temp directory.
+Removing global temp directory.
+
+6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \int_mac..
+Removed 0 unused cells and 250 unused wires.
+<suppressed ~1 debug messages>
+
+7. Printing statistics.
+
+=== int_mac ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+      295        - wires
+      339        - wire bits
+       15        - public wires
+       59        - public wire bits
+        6        - ports
+       25        - port bits
+      282  393.414 cells
+        2        -   $scopeinfo
+        7    7.448   AND2_X1
+       11    14.63   AND3_X1
+        1    1.596   AND4_X1
+        1     1.33   AOI211_X1
+       40    42.56   AOI21_X1
+        1    1.596   AOI221_X1
+        5     6.65   AOI22_X1
+       23  104.006   DFF_X1
+       15     7.98   INV_X1
+       23   18.354   NAND2_X1
+       15    15.96   NAND3_X1
+        2     2.66   NAND4_X1
+       20    15.96   NOR2_X1
+       13   13.832   NOR3_X1
+        3     3.99   OAI211_X1
+       41   43.624   OAI21_X1
+        1    1.596   OAI221_X1
+        1     1.33   OAI22_X1
+        3    3.192   OR2_X1
+        4     5.32   OR3_X1
+       38   60.648   XNOR2_X1
+       12   19.152   XOR2_X1
+
+   Area for cell type $scopeinfo is unknown!
+
+   Chip area for module '\int_mac': 393.414000
+     of which used for sequential elements: 104.006000 (26.44%)
+
+End of script. Logfile hash: 3ef4f8b78e, time: 0.24s, user: 0.08s, system: 0.02s, MEM: 17.52 MB peak
+Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 17.0.0.17000604)
+Time spent: 71% 2x abc (0 sec), 7% 1x dfflibmap (0 sec), ...

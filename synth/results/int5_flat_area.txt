@@ -1,0 +1,44 @@
+
+7. Printing statistics.
+
+=== int_mac ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+      359        - wires
+      413        - wire bits
+       15        - public wires
+       69        - public wire bits
+        6        - ports
+       29        - port bits
+      346   486.78 cells
+        2        -   $scopeinfo
+       12   12.768   AND2_X1
+        5     6.65   AND3_X1
+        5     7.98   AND4_X1
+        2     2.66   AOI211_X1
+       37   39.368   AOI21_X1
+        8    10.64   AOI22_X1
+       27  122.094   DFF_X1
+       25     13.3   INV_X1
+        1    1.862   MUX2_X1
+       32   25.536   NAND2_X1
+        5     5.32   NAND3_X1
+       26   20.748   NOR2_X1
+        8    8.512   NOR3_X1
+        1     1.33   OAI211_X1
+       40    42.56   OAI21_X1
+        4     5.32   OAI22_X1
+        1    1.862   OAI33_X1
+       12   12.768   OR2_X1
+       11    14.63   OR3_X1
+        1    1.596   OR4_X1
+       57   90.972   XNOR2_X1
+       24   38.304   XOR2_X1
+
+   Area for cell type $scopeinfo is unknown!
+
+   Chip area for module '\int_mac': 486.780000
+     of which used for sequential elements: 122.094000 (25.08%)
+

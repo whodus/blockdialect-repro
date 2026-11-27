@@ -1,0 +1,11 @@
+# Cell library: download separately (see README)
+NangateOpenCellLibrary_typical.lib
+
+# Simulation outputs
+*.vvp
+*.vcd
+
+# Local notes
+PLAN.md
+
+.DS_Store

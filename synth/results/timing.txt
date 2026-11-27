@@ -1,0 +1,6 @@
+int4        critical path: 651.93 ps
+int5        critical path: 875.14 ps
+int8        critical path: 1019.86 ps
+fp4         critical path: 856.16 ps
+fp4int      critical path: 806.83 ps
+dialectfp4  critical path: 809.75 ps

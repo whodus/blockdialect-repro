@@ -1,0 +1,43 @@
+
+6. Printing statistics.
+
+=== dialectfp4_mac ===
+
+        +----------Local Count, excluding submodules.
+        |        +-Local Area, excluding submodules.
+        |        | 
+      229        - wires
+      289        - wire bits
+       22        - public wires
+       82        - public wire bits
+        8        - ports
+       28        - port bits
+      209   325.85 cells
+        2        -   $scopeinfo
+        6    6.384   AND2_X1
+        6     7.98   AND3_X1
+        3    4.788   AND4_X1
+       11    14.63   AOI211_X1
+       18   19.152   AOI21_X1
+        4     5.32   AOI22_X1
+       26  117.572   DFF_X1
+        5     2.66   INV_X1
+       25    19.95   NAND2_X1
+        4    4.256   NAND3_X1
+        1     1.33   NAND4_X1
+       23   18.354   NOR2_X1
+        3    3.192   NOR3_X1
+        3     3.99   OAI211_X1
+       19   20.216   OAI21_X1
+        2     2.66   OAI22_X1
+        1    1.862   OAI33_X1
+        4    4.256   OR2_X1
+        5     6.65   OR3_X1
+       24   38.304   XNOR2_X1
+       14   22.344   XOR2_X1
+
+   Area for cell type $scopeinfo is unknown!
+
+   Chip area for module '\dialectfp4_mac': 325.850000
+     of which used for sequential elements: 117.572000 (36.08%)
+
